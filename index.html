@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog Renderer - Vue CDN Example</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Vue.js CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Phosphor Icons for beautiful UI -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+</head>
+<body class="mode-dark">
+    <div class="changelog-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="changelog-sidebar">
+            <div class="sidebar-header">
+                <h2>📝 Changelog</h2>
+                <p>Release History</p>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="sidebar-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="totalReleases">0</span>
+                        <span class="stat-label">Releases</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalChanges">0</span>
+                        <span class="stat-label">Changes</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-releases" id="sidebarReleases">
+                    <!-- Will be populated by Vue -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="changelog-main">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1 id="appTitle">My App Release Notes</h1>
+                        <p class="page-description">Complete version history and updates</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vue App Container -->
+            <div id="changelogApp">
+                <changelog-manager></changelog-manager>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

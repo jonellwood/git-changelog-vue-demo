@@ -4,7 +4,7 @@ This is a **Vue 3 CDN-based changelog renderer** that displays release notes in 
 
 ## Demo
 
-🌐 **[Live Demo](https://vue.jonellwood.dev){:target="_blank"}** - See it in action!
+🌐 **[Live Demo](https://vue.jonellwood.dev)** - See it in action!
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f7c08a3e-64c0-42f0-953f-62ad53b90978/deploy-status)](https://app.netlify.com/projects/vue-changelog-demo/deploys)
 

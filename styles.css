@@ -34,6 +34,13 @@ body {
     line-height: 1.6;
 }
 
+/* Global theme transitions */
+body,
+.changelog-sidebar,
+.changelog-main {
+    transition: background-color .3s ease, color .3s ease;
+}
+
 /* Apple-Style Layout */
 .changelog-layout {
     display: flex;
@@ -184,7 +191,7 @@ body {
 }
 
 .toggle-btn.active {
-    background: var(--c-accent);
+    background: #0056b3;
     color: white;
 }
 
@@ -868,6 +875,56 @@ body {
     font-weight: 500;
 }
 
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--c-accent) 20%, transparent);
+    background: var(--c-bg-alt);
+    color: var(--c-fg);
+    cursor: pointer;
+    transition: background .2s ease, transform .1s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: color-mix(in srgb, var(--c-accent) 10%, transparent);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(.95);
+}
+
+.theme-toggle-btn i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+body.mode-dark .theme-toggle-btn .ph-moon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0);
+}
+
+body.mode-dark .theme-toggle-btn .ph-sun {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+body.light-active .theme-toggle-btn .ph-moon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+body.light-active .theme-toggle-btn .ph-sun {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .changelog-sidebar {
@@ -902,5 +959,40 @@ body {
     .stats-bar {
         margin: 0 1rem 2rem;
         grid-template-columns: 1fr;
+    }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    body,
+    .changelog-sidebar,
+    .changelog-main,
+    .theme-toggle-btn,
+    .theme-toggle-btn i,
+    .release-card,
+    .stat-card,
+    .action-btn {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .theme-toggle-btn:hover,
+    .theme-toggle-btn:active,
+    .release-card:hover,
+    .stat-card:hover {
+        transform: none !important;
+    }
+    
+    .loading-spinner {
+        animation: none !important;
     }
 }

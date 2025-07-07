@@ -121,6 +121,9 @@ window.changelogData = {
 };
 
 // Changelog Vue Component - Modern card-based interface with search and filtering
+// Note: The theme toggle button is outside the Vue app in HTML and works via the global
+// vanilla handler. However, if you need Vue-aware theme functionality within components,
+// you can access window.vueApp.themeIsDark and window.vueApp.toggleTheme()
 const changelogManager = {
 	setup() {
 		// Destructure Vue composition API functions
@@ -328,10 +331,10 @@ const changelogManager = {
 			const minor = parseInt(parts[1]) || 0;
 			const patch = parseInt(parts[2]) || 0;
 
-			if (major > 0) return 'ph-rocket-launch';
-			if (minor > 0) return 'ph-star';
-			if (patch > 50) return 'ph-medal';
-			return 'ph-tag';
+            if (major > 0) return 'ph ph-rocket-launch';
+            if (minor > 0) return 'ph ph-star';
+            if (patch > 50) return 'ph ph-medal';
+            return 'ph ph-tag';
 		};
 
 		const getChangesSummary = (content) => {
@@ -388,7 +391,7 @@ const changelogManager = {
                         :class="{ active: viewMode === 'grid' }"
                         @click="viewMode = 'grid'"
                     >
-                        <i class="ph-duotone ph-squares-four"></i>
+                        <i class="ph ph-duotone ph-squares-four"></i>
                         Grid
                     </button>
                     <button 
@@ -396,7 +399,7 @@ const changelogManager = {
                         :class="{ active: viewMode === 'list' }"
                         @click="viewMode = 'list'"
                     >
-                        <i class="ph-duotone ph-list"></i>
+                        <i class="ph ph-duotone ph-list"></i>
                         List
                     </button>
                 </div>
@@ -406,7 +409,7 @@ const changelogManager = {
             <div class="filter-bar">
                 <div class="filter-left">
                     <div class="search-box">
-                        <i class="ph-duotone ph-magnifying-glass"></i>
+                        <i class="ph ph-duotone ph-magnifying-glass"></i>
                         <input 
                             type="text" 
                             v-model="searchTerm" 
@@ -417,8 +420,8 @@ const changelogManager = {
                 </div>
                 <div class="filter-right">
                     <div class="sort-dropdown">
-                        <label>Sort by:</label>
-                        <select v-model="sortBy">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect" v-model="sortBy">
                             <option value="date">Date</option>
                             <option value="version">Version</option>
                             <option value="changes">Changes</option>
@@ -434,7 +437,7 @@ const changelogManager = {
             <div class="stats-bar">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="ph-duotone ph-chart-line"></i>
+                        <i class="ph ph-duotone ph-chart-line"></i>
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">{{ displayStats.total }}</div>
@@ -443,7 +446,7 @@ const changelogManager = {
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="ph-duotone ph-list-bullets"></i>
+                        <i class="ph ph-duotone ph-list-bullets"></i>
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">{{ displayStats.totalChanges }}</div>
@@ -452,7 +455,7 @@ const changelogManager = {
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="ph-duotone ph-rocket-launch"></i>
+                        <i class="ph ph-duotone ph-rocket-launch"></i>
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">{{ displayStats.latestVersion }}</div>
@@ -470,7 +473,7 @@ const changelogManager = {
             <!-- Empty State -->
             <div v-else-if="filteredReleases.length === 0" class="empty-state">
                 <div class="empty-icon">
-                    <i class="ph-duotone ph-file-text"></i>
+                    <i class="ph ph-duotone ph-file-text"></i>
                 </div>
                 <h3>No releases found</h3>
                 <p v-if="searchTerm">Try adjusting your search criteria</p>
@@ -508,17 +511,17 @@ const changelogManager = {
                     <div class="release-footer">
                         <div class="release-stats">
                             <span class="stat-item">
-                                <i class="ph-duotone ph-list-bullets"></i>
+                                <i class="ph ph-duotone ph-list-bullets"></i>
                                 {{ release.changeCount }} changes
                             </span>
                             <span class="stat-item">
-                                <i class="ph-duotone ph-calendar"></i>
+                                <i class="ph ph-duotone ph-calendar"></i>
                                 {{ formatDate(release.date) }}
                             </span>
                         </div>
                         <div class="release-actions">
                             <button class="action-btn primary" @click="viewReleaseDetails(release)">
-                                <i class="ph-duotone ph-arrow-right"></i>
+                                <i class="ph ph-duotone ph-arrow-right"></i>
                                 View Release
                             </button>
                         </div>
@@ -550,7 +553,7 @@ const changelogManager = {
                         </div>
                         <div class="release-actions">
                             <button class="action-btn primary" @click="viewReleaseDetails(release)">
-                                <i class="ph-duotone ph-arrow-right"></i>
+                                <i class="ph ph-duotone ph-arrow-right"></i>
                                 View
                             </button>
                         </div>
@@ -564,22 +567,22 @@ const changelogManager = {
                     <div class="modal-header">
                         <h2 class="modal-title">{{ selectedRelease?.version }}</h2>
                         <button class="modal-close" @click="closeModal">
-                            <i class="ph-duotone ph-x"></i>
+                            <i class="ph ph-duotone ph-x"></i>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="release-detail">
                             <div class="release-meta">
                                 <div class="meta-item">
-                                    <i class="ph-duotone ph-calendar"></i>
+                                    <i class="ph ph-duotone ph-calendar"></i>
                                     {{ formatDate(selectedRelease?.date) }}
                                 </div>
                                 <div class="meta-item">
-                                    <i class="ph-duotone ph-list-bullets"></i>
+                                    <i class="ph ph-duotone ph-list-bullets"></i>
                                     {{ selectedRelease?.changeCount }} changes
                                 </div>
                                 <div class="meta-item">
-                                    <i class="ph-duotone ph-tag"></i>
+                                    <i class="ph ph-duotone ph-tag"></i>
                                     {{ selectedRelease?.tag }}
                                 </div>
                             </div>
@@ -630,6 +633,47 @@ window.scrollToRelease = function (version) {
 	}
 };
 
+// Theme Management Logic
+(function() {
+  const STORAGE_KEY = 'prefers-dark';
+  const body = document.body;
+  const toggleBtn = document.getElementById('themeToggle');
+
+  // Make applyTheme globally accessible for Vue integration
+  window.applyTheme = (dark) => {
+    if (dark) {
+      body.classList.add('mode-dark');
+      body.classList.remove('light-active');
+      toggleBtn?.classList.add('dark');
+    } else {
+      body.classList.remove('mode-dark');
+      body.classList.add('light-active');
+      toggleBtn?.classList.remove('dark');
+    }
+    localStorage.setItem(STORAGE_KEY, dark ? '1' : '0');
+    
+    // Notify Vue app of theme change if it exists
+    if (window.vueApp && window.vueApp.themeIsDark) {
+      window.vueApp.themeIsDark.value = dark;
+    }
+  };
+
+  // initial load
+  const saved = localStorage.getItem(STORAGE_KEY);
+  const initialDark = saved === null ? true : saved === '1';
+  window.applyTheme(initialDark);
+
+  // wait for DOM then hook click
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        window.applyTheme(!body.classList.contains('mode-dark'));
+      });
+    }
+  });
+})();
+
 // Debug: Log when Vue app is being initialized
 console.log('Changelog script loaded');
 console.log('Window changelogData:', window.changelogData);
@@ -652,9 +696,36 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	try {
-		const { createApp } = Vue;
+		const { createApp, ref } = Vue;
+
+		// Get initial theme state
+		const STORAGE_KEY = 'prefers-dark';
+		const saved = localStorage.getItem(STORAGE_KEY);
+		const initialDark = saved === null ? true : saved === '1';
 
 		const app = createApp({
+			setup() {
+				// Reactive theme state
+				const themeIsDark = ref(initialDark);
+
+				// Theme toggle function that calls the global applyTheme
+				const toggleTheme = () => {
+					if (typeof window.applyTheme === 'function') {
+						window.applyTheme(!themeIsDark.value);
+					}
+				};
+
+				// Expose theme state and toggle function globally for consistency
+				window.vueApp = {
+					themeIsDark,
+					toggleTheme
+				};
+
+				return {
+					themeIsDark,
+					toggleTheme
+				};
+			},
 			components: {
 				'changelog-manager': changelogManager,
 			},

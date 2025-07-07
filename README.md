@@ -10,7 +10,7 @@ This is a **Vue 3 CDN-based changelog renderer** that displays release notes in 
 
 ## 🎯 Features
 
-- **Apple-inspired Design** - Clean, professional sidebar layout
+- **Clean Modern Design** - Clean, professional sidebar layout
 - **Vue 3 Composition API** - Modern, reactive components
 - **No Build Tools** - Just include via CDN and go
 - **Search & Filter** - Find releases quickly
